@@ -54,12 +54,12 @@ jobs:
     - name: Generate coverage report for backend
       run: |
         cd httpbin-backend
-        npm run coverage
+        npm run test:coverage
 
     - name: Generate coverage report for frontend
       run: |
         cd httpbin-dashboard
-        npm run coverage
+        npm run test:coverage
 
     - name: Upload coverage report for backend
       uses: actions/upload-artifact@v3
