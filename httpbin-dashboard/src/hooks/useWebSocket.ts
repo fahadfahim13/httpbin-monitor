@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { httpbinApi } from '../store/services/httpbin';
+import { useDispatch } from 'react-redux';
 import { HttpbinResponse } from '../types';
 
 interface UseWebSocketProps {
@@ -9,6 +11,8 @@ interface UseWebSocketProps {
 let socket: Socket | null = null;
 
 export const useWebSocket = ({ onNewResponse }: UseWebSocketProps) => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!socket) {
       socket = io(process.env.NEXT_PUBLIC_WEBSOCKET_URL || 'http://localhost:8000');
@@ -18,7 +22,12 @@ export const useWebSocket = ({ onNewResponse }: UseWebSocketProps) => {
       });
 
       socket.on('new-response', (data: HttpbinResponse) => {
-        onNewResponse(data);
+        dispatch(
+          httpbinApi.util.updateQueryData('getResponses', undefined, (draft) => {
+            draft.unshift(data);
+          }) as any
+        );
+        onNewResponse(data)
       });
 
       socket.on('disconnect', () => {
@@ -32,7 +41,7 @@ export const useWebSocket = ({ onNewResponse }: UseWebSocketProps) => {
         socket = null;
       }
     };
-  }, [onNewResponse]);
+  }, [dispatch]);
 
   return socket;
 };
