@@ -47,7 +47,7 @@ app.get('/api/responses/range', (req, res) => controller.getByDateRange(req, res
 //   monitor.execute();
 // }, parseInt(process.env.HTTPBIN_INTERVAL!) || 300000);
 
-cron.schedule("*/1 * * * *", async () => {
+cron.schedule("*/5 * * * *", async () => {
   console.log("running monitor every 5 minutes.");
   await monitor.execute();
   console.log(`${new Date().toUTCString()} Monitoring complete.`)

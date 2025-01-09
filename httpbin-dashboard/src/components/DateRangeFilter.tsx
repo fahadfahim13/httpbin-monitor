@@ -1,27 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useGetResponsesByDateRangeQuery } from '../store/services/httpbin';
+import React, { Dispatch, SetStateAction } from 'react';
 
-export const DateRangeFilter: React.FC = () => {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [isFiltering, setIsFiltering] = useState(false);
+export const DateRangeFilter = (props: {
+    startDate: string;
+    setStartDate: Dispatch<SetStateAction<string>>;
+    endDate: string;
+    setEndDate: Dispatch<SetStateAction<string>>;
+    handleFilter: () => void;
+    clearFilter: () => void;
+}) => {
 
-  const { data: filteredResponses, isLoading } = useGetResponsesByDateRangeQuery(
-    { startDate, endDate },
-    { skip: !isFiltering }
-  );
-
-  const handleFilter = () => {
-    setIsFiltering(true);
-  };
-
-  const clearFilter = () => {
-    setStartDate('');
-    setEndDate('');
-    setIsFiltering(false);
-  };
+    const { startDate, setStartDate, endDate, setEndDate, handleFilter, clearFilter } = props;
 
   return (
     <div className="bg-white shadow rounded-lg p-4 mb-6">
