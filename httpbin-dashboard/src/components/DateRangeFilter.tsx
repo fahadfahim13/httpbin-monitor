@@ -17,10 +17,11 @@ export const DateRangeFilter = (props: {
     <div className="bg-white shadow rounded-lg p-4 mb-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label htmlFor="start-date" className="block text-sm font-medium text-gray-700">
             Start Date
           </label>
           <input
+            id="start-date"
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -28,10 +29,11 @@ export const DateRangeFilter = (props: {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label htmlFor="end-date" className="block text-sm font-medium text-gray-700">
             End Date
           </label>
           <input
+            id="end-date"
             type="date"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
