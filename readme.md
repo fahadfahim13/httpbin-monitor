@@ -183,8 +183,8 @@ Dashboard
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
-cd project-name
+git clone https://github.com/fahadfahim13/httpbin-monitor.git
+cd httpbin-monitor/httpbin-backend/
 ```
 
 2. Install dependencies:
@@ -215,7 +215,7 @@ npm start
 
 1. Navigate to frontend directory:
 ```bash
-cd frontend
+cd httpbin-monitor/http-dashboard
 ```
 
 2. Install dependencies:
@@ -233,6 +233,11 @@ NEXT_PUBLIC_WEBSOCKET_URL=http://localhost:3000
 4. Run development server:
 ```bash
 npm run dev
+```
+
+### Run Backend, Frontend & DB with Docker
+```bash
+docker-compose up
 ```
 
 ## Development Guide
@@ -272,7 +277,7 @@ npm test
 
 ### Frontend Tests
 ```bash
-cd frontend
+
 npm test
 ```
 
@@ -282,12 +287,12 @@ npm test
 
 1. Build Docker image:
 ```bash
-docker build -t httpbin-monitor .
+docker build -t httpbin-backend ./httpbin-backend
 ```
 
 2. Run container:
 ```bash
-docker run -p 3000:3000 httpbin-monitor
+docker run -p 3000:3000 httpbin-backend
 ```
 
 ### Frontend Deployment

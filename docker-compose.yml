@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./httpbin-backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/httpbin_monitor
+      - PORT=8000
+      - HTTPBIN_INTERVAL=300000
+    depends_on:
+      - mongo
+    networks:
+      - httpbin-network
+
+  frontend:
+    build:
+      context: ./httpbin-dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_WEBSOCKET_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - httpbin-network
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - httpbin-network
+
+networks:
+  httpbin-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
