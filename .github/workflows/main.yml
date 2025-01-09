@@ -62,13 +62,13 @@ jobs:
         npm run coverage
 
     - name: Upload coverage report for backend
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: backend-coverage-report
         path: httpbin-backend/coverage
 
     - name: Upload coverage report for frontend
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: dashboard-coverage-report
         path: httpbin-dashboard/coverage
