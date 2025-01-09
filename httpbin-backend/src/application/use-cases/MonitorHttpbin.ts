@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { HttpbinResponseRepository } from '../interfaces/repositories/HttpbinResponseRepository';
 import { WebSocketService } from '../interfaces/services/WebSocketService';
+import logger from '../../infrastructure/logger';
 
 export class MonitorHttpbin {
     constructor(
@@ -10,21 +11,31 @@ export class MonitorHttpbin {
   
     async execute(): Promise<void> {
       try {
-        const requestPayload = this.generateRandomPayload();
-        const response = await axios.post('https://httpbin.org/post', requestPayload);
-  
-        const httpbinResponse = {
-          timestamp: new Date(),
-          requestPayload,
-          responseData: response.data
-        };
+      logger.info('Starting execute method');
+      
+      const requestPayload = this.generateRandomPayload();
+      logger.debug('Generated request payload:', requestPayload);
+      
+      const response = await axios.post('https://httpbin.org/post', requestPayload);
+      logger.debug('Received response from httpbin:', response.data);
+    
+      const httpbinResponse = {
+        timestamp: new Date(),
+        requestPayload,
+        responseData: response.data
+      };
+      logger.info('Constructed httpbinResponse object:', httpbinResponse);
 
-        console.log(httpbinResponse);
-  
-        const savedResponse = await this.repository.save(httpbinResponse);
-        this.wsService.broadcast('new-response', savedResponse);
+      logger.info('Saving response to repository');
+      const savedResponse = await this.repository.save(httpbinResponse);
+      logger.debug('Saved response:', savedResponse);
+
+      logger.info('Broadcasting response via WebSocket');
+      this.wsService.broadcast('new-response', savedResponse);
+      
+      logger.info('Execute method completed successfully');
       } catch (error) {
-        console.error('Error monitoring httpbin:', error);
+      logger.error('Error monitoring httpbin:', error);
       }
     }
   
