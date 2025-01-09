@@ -1,6 +1,5 @@
-import { HttpbinResponseModel } from "../models/HttpbinResponseModel";
-import { MongoHttpbinResponseRepository } from "./MongoHttpbinResponseRepository";
-
+import { HttpbinResponseModel } from '../models/HttpbinResponseModel';
+import { MongoHttpbinResponseRepository } from './MongoHttpbinResponseRepository';
 
 jest.mock('../models/HttpbinResponseModel');
 
@@ -9,7 +8,7 @@ describe('MongoHttpbinResponseRepository', () => {
   const mockResponse = {
     timestamp: new Date(),
     requestPayload: { test: 'request' },
-    responseData: { test: 'response' }
+    responseData: { test: 'response' },
   };
 
   beforeEach(() => {
@@ -20,7 +19,7 @@ describe('MongoHttpbinResponseRepository', () => {
   it('should save httpbin response', async () => {
     const mockSave = jest.fn().mockResolvedValue(mockResponse);
     (HttpbinResponseModel as unknown as jest.Mock).mockImplementation(() => ({
-      save: mockSave
+      save: mockSave,
     }));
 
     const result = await repository.save(mockResponse);
@@ -34,7 +33,7 @@ describe('MongoHttpbinResponseRepository', () => {
     const mockExec = jest.fn().mockResolvedValue(mockResponses);
     const mockSort = jest.fn().mockReturnValue({ exec: mockExec });
     const mockFind = jest.fn().mockReturnValue({ sort: mockSort });
-    
+
     HttpbinResponseModel.find = mockFind;
 
     const result = await repository.findAll();
@@ -51,7 +50,7 @@ describe('MongoHttpbinResponseRepository', () => {
     const mockExec = jest.fn().mockResolvedValue(mockResponses);
     const mockSort = jest.fn().mockReturnValue({ exec: mockExec });
     const mockFind = jest.fn().mockReturnValue({ sort: mockSort });
-    
+
     HttpbinResponseModel.find = mockFind;
 
     const result = await repository.findByDateRange(startDate, endDate);
@@ -59,8 +58,8 @@ describe('MongoHttpbinResponseRepository', () => {
     expect(mockFind).toHaveBeenCalledWith({
       timestamp: {
         $gte: startDate,
-        $lte: endDate
-      }
+        $lte: endDate,
+      },
     });
     expect(result).toEqual(mockResponses);
   });

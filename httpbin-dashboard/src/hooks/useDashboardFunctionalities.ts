@@ -10,7 +10,7 @@ const useDashboardFunctionalities = () => {
   const [endDate, setEndDate] = useState("");
   const [isFiltering, setIsFiltering] = useState(false);
 
-  const { data: filteredResponses = [], isLoading: isDateFilteringLoading } =
+  const { data: filteredResponses = [] } =
     useGetResponsesByDateRangeQuery(
       { startDate, endDate },
       { skip: !isFiltering }

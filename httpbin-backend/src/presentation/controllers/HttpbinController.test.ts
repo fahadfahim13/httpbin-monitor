@@ -25,7 +25,7 @@ describe('HttpbinController', () => {
     it('should return all responses', async () => {
       const mockResponses = [
         { id: 1, timestamp: new Date(), requestPayload: {}, responseData: {} },
-        { id: 2, timestamp: new Date(), requestPayload: {}, responseData: {} }
+        { id: 2, timestamp: new Date(), requestPayload: {}, responseData: {} },
       ];
       repository.findAll.mockResolvedValue(mockResponses);
 
@@ -47,11 +47,13 @@ describe('HttpbinController', () => {
 
   describe('getByDateRange', () => {
     it('should return responses within date range', async () => {
-      const mockResponses = [{ id: 1, timestamp: new Date(), requestPayload: {}, responseData: {} }];
+      const mockResponses = [
+        { id: 1, timestamp: new Date(), requestPayload: {}, responseData: {} },
+      ];
       const startDate = '2023-01-01';
       const endDate = '2023-12-31';
       req = {
-        query: { startDate, endDate }
+        query: { startDate, endDate },
       };
       repository.findByDateRange.mockResolvedValue(mockResponses);
 
@@ -59,7 +61,7 @@ describe('HttpbinController', () => {
 
       expect(repository.findByDateRange).toHaveBeenCalledWith(
         new Date(startDate),
-        new Date(endDate)
+        new Date(endDate),
       );
       expect(res.json).toHaveBeenCalledWith(mockResponses);
     });

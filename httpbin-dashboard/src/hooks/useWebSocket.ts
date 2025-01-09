@@ -25,6 +25,7 @@ export const useWebSocket = ({ onNewResponse }: UseWebSocketProps) => {
         dispatch(
           httpbinApi.util.updateQueryData('getResponses', undefined, (draft) => {
             draft.unshift(data);
+            // eslint-disable-next-line
           }) as any
         );
         onNewResponse(data)

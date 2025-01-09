@@ -25,7 +25,7 @@ describe('MonitorHttpbin', () => {
 
   it('should successfully monitor httpbin and save response', async () => {
     const mockResponse = {
-      data: { test: 'response' }
+      data: { test: 'response' },
     };
     mockedAxios.post.mockResolvedValue(mockResponse);
 
@@ -33,15 +33,16 @@ describe('MonitorHttpbin', () => {
 
     expect(mockedAxios.post).toHaveBeenCalledWith(
       'https://httpbin.org/post',
-      expect.any(Object)
+      expect.any(Object),
     );
 
-    expect(repository.save).toHaveBeenCalledWith(expect.objectContaining({
-      timestamp: expect.any(Date),
-      requestPayload: expect.any(Object),
-      responseData: mockResponse.data
-    }));
+    expect(repository.save).toHaveBeenCalledWith(
+      expect.objectContaining({
+        timestamp: expect.any(Date),
+        requestPayload: expect.any(Object),
+        responseData: mockResponse.data,
+      }),
+    );
     expect(wsService.broadcast).toHaveBeenCalled();
   });
-
 });

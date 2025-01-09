@@ -1,3 +1,3 @@
 export interface WebSocketService {
-    broadcast(event: string, data: any): void;
-  }
+  broadcast(event: string, data: any): void;
+}

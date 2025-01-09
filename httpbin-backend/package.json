@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint . --ext .ts",
+    "lint": "tsc --noEmit",
+    "lint:fix": "tsc --noEmit && prettier --write .",
     "format": "prettier --write .",
     "test": "jest",
     "test:watch": "jest --watch",

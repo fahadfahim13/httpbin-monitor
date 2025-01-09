@@ -3,7 +3,9 @@ import { HttpbinResponseRepository } from '../../../application/interfaces/repos
 import { HttpbinResponseModel } from '../models/HttpbinResponseModel';
 import logger from '../../logger';
 
-export class MongoHttpbinResponseRepository implements HttpbinResponseRepository {
+export class MongoHttpbinResponseRepository
+  implements HttpbinResponseRepository
+{
   async save(response: HttpbinResponse): Promise<HttpbinResponse> {
     try {
       logger.info('Saving response:', response);
@@ -20,7 +22,9 @@ export class MongoHttpbinResponseRepository implements HttpbinResponseRepository
   async findAll(): Promise<HttpbinResponse[]> {
     try {
       logger.info('Fetching all responses');
-      const result = await HttpbinResponseModel.find().sort({ timestamp: -1 }).exec();
+      const result = await HttpbinResponseModel.find()
+        .sort({ timestamp: -1 })
+        .exec();
       logger.info('Fetched responses:', result);
       return result;
     } catch (error) {
@@ -29,19 +33,27 @@ export class MongoHttpbinResponseRepository implements HttpbinResponseRepository
     }
   }
 
-  async findByDateRange(startDate: Date, endDate: Date): Promise<HttpbinResponse[]> {
+  async findByDateRange(
+    startDate: Date,
+    endDate: Date,
+  ): Promise<HttpbinResponse[]> {
     try {
       logger.info(`Fetching responses from ${startDate} to ${endDate}`);
       const result = await HttpbinResponseModel.find({
         timestamp: {
           $gte: startDate,
-          $lte: endDate
-        }
-      }).sort({ timestamp: -1 }).exec();
+          $lte: endDate,
+        },
+      })
+        .sort({ timestamp: -1 })
+        .exec();
       logger.info('Fetched responses:', result);
       return result;
     } catch (error) {
-      logger.error(`Error fetching responses from ${startDate} to ${endDate}:`, error);
+      logger.error(
+        `Error fetching responses from ${startDate} to ${endDate}:`,
+        error,
+      );
       throw error;
     }
   }

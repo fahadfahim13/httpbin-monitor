@@ -1,0 +1,11 @@
+{
+    "scripts": {
+      "lint": "eslint . --ext .ts,.tsx",
+      "coverage": "jest --coverage"
+    },
+    "devDependencies": {
+      "eslint": "^7.32.0",
+      "jest": "^27.0.6",
+      "ts-jest": "^27.0.5"
+    }
+  }
